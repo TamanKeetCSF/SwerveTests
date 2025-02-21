@@ -1,12 +1,13 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveConstants;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.geometry.Rotation2d;
+
+import com.ctre.phoenix.sensors.PigeonIMU;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
     
@@ -37,12 +38,39 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SwerveConstants.BACK_RIGHT_POSITION
     );
     
+    private final PigeonIMU gyro = new PigeonIMU(0);
+    
+    private boolean fieldOriented = true;
+    
     public SwerveDriveSubsystem() {}
+
+    /**
+     * Habilitar o dehabilitar field.oriented
+     * @param fieldOriented verdadero en field-oriented, falso robot-oriented
+     */
+    public void setFieldOriented(boolean fieldOriented) {
+        this.fieldOriented = fieldOriented;
+    }
+    
+    public void toggleFieldOriented() {
+        fieldOriented = !fieldOriented;
+    }
+    
+    public boolean isFieldOriented() {
+        return fieldOriented;
+    }
     
     public void drive(double xSpeed, double ySpeed, double rotation) {
-        SwerveModuleState[] states = kinematics.toSwerveModuleStates(
-            new edu.wpi.first.math.kinematics.ChassisSpeeds(xSpeed, ySpeed, rotation)
-        );
+        ChassisSpeeds chassisSpeeds;
+        if (fieldOriented) {
+            double yaw = gyro.getYaw();
+            Rotation2d gyroAngle = Rotation2d.fromDegrees(yaw);
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotation, gyroAngle);
+        } else {
+            chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, rotation);
+        }
+        
+        SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
         
         frontLeft.setDesiredState(states[0].speedMetersPerSecond, states[0].angle);
         frontRight.setDesiredState(states[1].speedMetersPerSecond, states[1].angle);
@@ -57,3 +85,4 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backRight.stop();
     }
 }
+
