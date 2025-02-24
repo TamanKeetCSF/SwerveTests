@@ -6,10 +6,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.geometry.Rotation2d;
+
 import com.ctre.phoenix.sensors.PigeonIMU;
 
-
-public class SwerveDriveSubsystem extends SubsystemBase {
+public class SwerveModuleTesting extends SubsystemBase {
     
     private final SwerveModule frontLeft = new SwerveModule(
         SwerveConstants.FRONT_LEFT_DRIVE_MOTOR, 
@@ -42,22 +42,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     
     private boolean fieldOriented = false;
     
-    public SwerveDriveSubsystem() {}
+    public SwerveModuleTesting() {}
 
     /**
-    * Habilitar o dehabilitar field.oriented
-    * @param fieldOriented verdadero en field-oriented, falso robot-oriented
-    */
+     * Habilitar o dehabilitar field.oriented
+     * @param fieldOriented verdadero en field-oriented, falso robot-oriented
+     */
     public void setFieldOriented(boolean fieldOriented) {
         this.fieldOriented = fieldOriented;
     }
     
-    public void setFieldOrientedTrue() {
-        fieldOriented = true;
-    }
-
-    public void setFieldOrientedFalse() {
-        fieldOriented = false;
+    public void toggleFieldOriented() {
+        fieldOriented = !fieldOriented;
     }
     
     public boolean isFieldOriented() {
@@ -70,18 +66,19 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             double yaw = gyro.getYaw();
             Rotation2d gyroAngle = Rotation2d.fromDegrees(yaw);
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotation, gyroAngle);
-        } 
-
-        else {
+        } else {
             chassisSpeeds = new ChassisSpeeds(ySpeed, xSpeed, rotation);
         }
+//AQUÍ SE ELIGE EL MÓDULO QUE SE DESEA PROBAR
+//LOS ESTADOS VAN DE ACUERDO AL MÓDULO
+//FrontLeft 0
+//FrontRight 1
+//BackLeft  2
+//BackRight 3
+
 
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
-
-        frontLeft.setDesiredState(states[0]);
-        frontRight.setDesiredState(states[1]);
         backLeft.setDesiredState(states[2]);
-        backRight.setDesiredState(states[3]);
     }
     
     public void stop() {
