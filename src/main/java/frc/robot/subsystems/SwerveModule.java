@@ -5,8 +5,10 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.ctre.phoenix6.hardware.CANcoder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveConstants;
+
 
 public class SwerveModule extends SubsystemBase {
     
@@ -24,13 +26,24 @@ public class SwerveModule extends SubsystemBase {
         steerPID.enableContinuousInput(-180, 180); 
     }
     
-    public void setDesiredState(double speed, Rotation2d angle) {
-        double currentAngle = encoder.getAbsolutePosition().getValueAsDouble();
-        double targetAngle = angle.getDegrees();
+    public void setDesiredState(SwerveModuleState desiredState) {
+        var encoderRotation = new Rotation2d(encoder.getPosition().getValueAsDouble());
+        desiredState.optimize(encoderRotation);
+
+        desiredState.cosineScale(encoderRotation);
+
+        double currentAngle = encoder.getAbsolutePosition().getValueAsDouble()*360; 
+        System.out.println("posisición del encoder" + currentAngle);
+        double targetAngle = desiredState.angle.getDegrees();
+        System.out.println("posisición objetivo" + targetAngle);
+        double error= currentAngle - targetAngle;
         double steerOutput = steerPID.calculate(currentAngle, targetAngle);
+
+        System.out.println("PIDangulo" + steerOutput);
         
-        driveMotor.set(speed / SwerveConstants.MAX_WHEEL_SPEED_MPS); 
-        steerMotor.set(steerOutput);
+        
+        driveMotor.set(desiredState.speedMetersPerSecond * Math.cos(error*Math.PI/180)*SwerveConstants.MAX_WHEEL_SPEED_MPS/10); 
+        steerMotor.set(steerOutput*10);
     }
     
     public Rotation2d getModuleAngle() {
