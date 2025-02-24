@@ -6,6 +6,7 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveConstants;
 
@@ -23,6 +24,7 @@ public class SwerveModule extends SubsystemBase {
         encoder = new CANcoder(encoderID);
         
         steerPID = new PIDController(SwerveConstants.STEER_P, SwerveConstants.STEER_I, SwerveConstants.STEER_D);
+        SmartDashboard.putData("SwerveSteerPID", steerPID);
         steerPID.enableContinuousInput(-180, 180); 
     }
     
@@ -34,8 +36,10 @@ public class SwerveModule extends SubsystemBase {
 
         double currentAngle = encoder.getAbsolutePosition().getValueAsDouble()*360; 
         System.out.println("posisición del encoder" + currentAngle);
+        SmartDashboard.putNumber("CurrentAngle", currentAngle);
         double targetAngle = desiredState.angle.getDegrees();
         System.out.println("posisición objetivo" + targetAngle);
+        SmartDashboard.putNumber("CurrentAngle", currentAngle);
         double error= currentAngle - targetAngle;
         double steerOutput = steerPID.calculate(currentAngle, targetAngle);
 
