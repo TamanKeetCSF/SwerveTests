@@ -18,11 +18,11 @@ public class SwerveModule extends SubsystemBase {
     private final CANcoder encoder;
     private final PIDController steerPID;
     
-    public SwerveModule(int driveMotorID, int steerMotorID, int encoderID) {
+    public SwerveModule(int driveMotorID, int steerMotorID, int encoderID, boolean isInverted) {
         driveMotor = new SparkMax(driveMotorID, MotorType.kBrushless);
         steerMotor = new SparkMax(steerMotorID, MotorType.kBrushless);
         encoder = new CANcoder(encoderID);
-        
+        driveMotor.setInverted(isInverted);
         steerPID = new PIDController(SwerveConstants.STEER_P, SwerveConstants.STEER_I, SwerveConstants.STEER_D);
         SmartDashboard.putData("SwerveSteerPID", steerPID);
         steerPID.enableContinuousInput(-180, 180); 
@@ -36,7 +36,7 @@ public class SwerveModule extends SubsystemBase {
 
         double currentAngle = encoder.getAbsolutePosition().getValueAsDouble()*360; 
         System.out.println("posisición del encoder" + currentAngle);
-        SmartDashboard.putNumber("CurrentAngle", currentAngle);
+        SmartDashboard.putNumber("STEER_P", SwerveConstants.STEER_P);
         double targetAngle = desiredState.angle.getDegrees();
         System.out.println("posisición objetivo" + targetAngle);
         SmartDashboard.putNumber("CurrentAngle", currentAngle);

@@ -7,6 +7,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.geometry.Rotation2d;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 
 public class SwerveDriveSubsystem extends SubsystemBase {
@@ -14,22 +16,26 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private final SwerveModule frontLeft = new SwerveModule(
         SwerveConstants.FRONT_LEFT_DRIVE_MOTOR, 
         SwerveConstants.FRONT_LEFT_STEER_MOTOR, 
-        SwerveConstants.FRONT_LEFT_CANCODER);
+        SwerveConstants.FRONT_LEFT_CANCODER,
+        false);
     
     private final SwerveModule frontRight = new SwerveModule(
         SwerveConstants.FRONT_RIGHT_DRIVE_MOTOR, 
         SwerveConstants.FRONT_RIGHT_STEER_MOTOR, 
-        SwerveConstants.FRONT_RIGHT_CANCODER);
+        SwerveConstants.FRONT_RIGHT_CANCODER,
+        true);
     
     private final SwerveModule backLeft = new SwerveModule(
         SwerveConstants.BACK_LEFT_DRIVE_MOTOR, 
         SwerveConstants.BACK_LEFT_STEER_MOTOR, 
-        SwerveConstants.BACK_LEFT_CANCODER);
+        SwerveConstants.BACK_LEFT_CANCODER,
+        false);
     
     private final SwerveModule backRight = new SwerveModule(
         SwerveConstants.BACK_RIGHT_DRIVE_MOTOR, 
         SwerveConstants.BACK_RIGHT_STEER_MOTOR, 
-        SwerveConstants.BACK_RIGHT_CANCODER);
+        SwerveConstants.BACK_RIGHT_CANCODER,
+        true);
     
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
         SwerveConstants.FRONT_LEFT_POSITION,
@@ -37,7 +43,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SwerveConstants.BACK_LEFT_POSITION,
         SwerveConstants.BACK_RIGHT_POSITION
     );
-    
+
     private final PigeonIMU gyro = new PigeonIMU(0);
     
     private boolean fieldOriented = false;
