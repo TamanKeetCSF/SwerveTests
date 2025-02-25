@@ -26,30 +26,46 @@ public class SwerveModule extends SubsystemBase {
         steerPID = new PIDController(SwerveConstants.STEER_P, SwerveConstants.STEER_I, SwerveConstants.STEER_D);
         SmartDashboard.putData("SwerveSteerPID", steerPID);
         steerPID.enableContinuousInput(-180, 180); 
-    }
-    
-    public void setDesiredState(SwerveModuleState desiredState) {
-        var encoderRotation = new Rotation2d(encoder.getPosition().getValueAsDouble());
-        desiredState.optimize(encoderRotation);
+        steerPID.setTolerance(5,10);
 
-        desiredState.cosineScale(encoderRotation);
+        }
+
+
+    public void setDesiredState(SwerveModuleState desiredState) {
+        // Get the current angle in degrees from the encoder.
+        double rawEncoderAngle = encoder.getAbsolutePosition().getValueAsDouble() * 360;
+        Rotation2d currentRotation = Rotation2d.fromDegrees(rawEncoderAngle);
+       
+        // Optimize desired state to reduce the amount of steering rotation.
+        desiredState.optimize(desiredState, currentRotation);
+        double targetAngle = desiredState.angle.getDegrees();
+       
+        // Update SmartDashboard for debugging.
+        SmartDashboard.putNumber("CurrentAngle", rawEncoderAngle);
+        SmartDashboard.putNumber("TargetAngle", targetAngle);
+       
+        // Calculate PID output.
+        double steerOutput = steerPID.calculate(rawEncoderAngle, targetAngle);
+       
+        // Optional: If within deadband, force output to zero.
+        if (Math.abs(rawEncoderAngle - targetAngle) < 5 || Math.abs(Math.abs(encoder.getAbsolutePosition().getValueAsDouble()*360 - targetAngle)-180) < 7) {
+            steerOutput = 0;
+        }
+       
+        // Drive output calculation remains unchanged, but check if cosine scaling is needed.
+        double driveOutput = desiredState.speedMetersPerSecond
+                    * Math.cos(Math.toRadians(rawEncoderAngle - targetAngle))
+                    * SwerveConstants.MAX_WHEEL_SPEED_MPS / 10;
 
         double currentAngle = encoder.getAbsolutePosition().getValueAsDouble()*360; 
-        System.out.println("posisición del encoder" + currentAngle);
-        SmartDashboard.putNumber("STEER_P", SwerveConstants.STEER_P);
-        double targetAngle = desiredState.angle.getDegrees();
-        System.out.println("posisición objetivo" + targetAngle);
-        SmartDashboard.putNumber("CurrentAngle", currentAngle);
-        double error= currentAngle - targetAngle;
-        double steerOutput = steerPID.calculate(currentAngle, targetAngle);
 
+        double error= currentAngle - targetAngle;
+        System.out.println("error" + error);
         System.out.println("PIDangulo" + steerOutput);
-        
-        
-        driveMotor.set(desiredState.speedMetersPerSecond * Math.cos(error*Math.PI/180)*SwerveConstants.MAX_WHEEL_SPEED_MPS/10); 
-        steerMotor.set(steerOutput*10);
+       
+        driveMotor.set(driveOutput);
+        steerMotor.set(steerOutput * 10);  // Adjust scale factor if needed.
     }
-    
     public Rotation2d getModuleAngle() {
         return Rotation2d.fromDegrees(encoder.getAbsolutePosition().getValueAsDouble());
     }

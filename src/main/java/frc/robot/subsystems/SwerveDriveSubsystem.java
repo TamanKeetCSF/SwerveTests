@@ -17,25 +17,25 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SwerveConstants.FRONT_LEFT_DRIVE_MOTOR, 
         SwerveConstants.FRONT_LEFT_STEER_MOTOR, 
         SwerveConstants.FRONT_LEFT_CANCODER,
-        false);
+        true);
     
     private final SwerveModule frontRight = new SwerveModule(
         SwerveConstants.FRONT_RIGHT_DRIVE_MOTOR, 
         SwerveConstants.FRONT_RIGHT_STEER_MOTOR, 
         SwerveConstants.FRONT_RIGHT_CANCODER,
-        true);
+        false);
     
     private final SwerveModule backLeft = new SwerveModule(
         SwerveConstants.BACK_LEFT_DRIVE_MOTOR, 
         SwerveConstants.BACK_LEFT_STEER_MOTOR, 
         SwerveConstants.BACK_LEFT_CANCODER,
-        false);
+        true);
     
     private final SwerveModule backRight = new SwerveModule(
         SwerveConstants.BACK_RIGHT_DRIVE_MOTOR, 
         SwerveConstants.BACK_RIGHT_STEER_MOTOR, 
         SwerveConstants.BACK_RIGHT_CANCODER,
-        true);
+        false);
     
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
         SwerveConstants.FRONT_LEFT_POSITION,

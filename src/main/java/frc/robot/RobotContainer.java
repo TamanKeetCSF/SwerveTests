@@ -1,6 +1,9 @@
 package frc.robot;
 
+import static edu.wpi.first.wpilibj.XboxController.Button;
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -58,11 +61,11 @@ public class RobotContainer {
         button1Start.onTrue(new InstantCommand(() -> module1.setFieldOrientedTrue()));
         button1Select.onTrue(new InstantCommand(() -> module1.setFieldOrientedFalse()));
 
-        button1A.onTrue(new InstantCommand(() -> bola.marcoSube(),bola))
-        .onFalse(new InstantCommand(() -> bola.marcoStop(),bola));
+        button1A.onTrue(new InstantCommand(() -> elevador.elevatorSube(), elevador))
+        .onFalse(new InstantCommand(() -> elevador.elevatorStop(), elevador));
 
-        button1B.onTrue(new InstantCommand(() -> bola.marcoBaja(),bola))
-        .onFalse(new InstantCommand(() -> bola.marcoStop(),bola));
+        button1B.onTrue(new InstantCommand(() -> elevador.elevatorBaja(), elevador))
+        .onFalse(new InstantCommand(() -> elevador.elevatorStop(), elevador));
 
         button1X.onTrue(new InstantCommand(() -> bola.ballIntakeComer(),bola))
         .onFalse(new InstantCommand(() -> bola.ballIntakeStop(),bola));
@@ -72,11 +75,11 @@ public class RobotContainer {
 
 
 //Funciones botones básicos Player2
-        button2A.onTrue(new InstantCommand(() -> elevador.elevatorSube(),elevador))
-        .onFalse(new InstantCommand(() -> elevador.elevatorStop(),elevador));
+        //button2A.onTrue(new InstantCommand(() -> elevador.elevatorSube(),elevador))
+        //.onFalse(new InstantCommand(() -> elevador.elevatorStop(),elevador));
 
-        button2B.onTrue(new InstantCommand(() -> elevador.elevatorBaja(),elevador))
-        .onFalse(new InstantCommand(() -> elevador.elevatorStop(),elevador));
+        //button2B.onTrue(new InstantCommand(() -> elevador.elevatorBaja(),elevador))
+        //.onFalse(new InstantCommand(() -> elevador.elevatorStop(),elevador));
 
         button2X.onTrue(new InstantCommand(() -> colgador.hangerSube(),colgador))
         .onFalse(new InstantCommand(() -> colgador.hangerStop(),colgador));
@@ -90,10 +93,10 @@ public class RobotContainer {
         button2BumperR.onTrue(new InstantCommand(() -> tomador.armBaja(),tomador))
         .onFalse(new InstantCommand(() -> tomador.armStop(),tomador));
 
-        button2Select.onTrue(new InstantCommand(() -> tomador.intakeComer(),tomador))
-        .onFalse(new InstantCommand(() -> tomador.intakeStop(),tomador));
+        button2Select.onTrue(new InstantCommand(() -> tomador.intakeComer()))
+        .onFalse(new InstantCommand(() -> tomador.intakeStop()));
 
-        button2Start.onTrue(new InstantCommand(() -> tomador.intakeSacar(),tomador))
+       button2Start.onTrue(new InstantCommand(() -> tomador.intakeSacar(),tomador))
         .onFalse(new InstantCommand(() -> tomador.intakeStop(),tomador)); 
     }
 }

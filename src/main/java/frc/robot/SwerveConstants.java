@@ -28,9 +28,9 @@ public class SwerveConstants {
     public static final int BACK_LEFT_CANCODER = 13;
     public static final int BACK_RIGHT_CANCODER = 12;
     
-    public static final double STEER_P = 0.000012;
-    public static final double STEER_I = 0.0;
-    public static final double STEER_D = 0.0;
+    public static final double STEER_P = 0.000060;
+    public static final double STEER_I = 0.000005;
+    public static final double STEER_D = 0.00000;
 
 
     public static final Translation2d FRONT_LEFT_POSITION = new Translation2d(0.30, 0.305);
