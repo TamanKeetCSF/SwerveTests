@@ -42,11 +42,13 @@ public class Intake extends SubsystemBase {
     }
 
     public void intakeComer() {
-        m_intake.set(0.15);  
+        System.out.println("ACTIVO");
+        m_intake.set(0.2); 
+        System.out.println(m_intake.get()); 
     }
 
     public void intakeSacar() {
-        m_intake.set(-0.15);  
+        m_intake.set(-0.2);  
     }
 
     public void intakeStop() {

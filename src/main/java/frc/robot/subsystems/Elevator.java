@@ -28,11 +28,11 @@ public class Elevator extends SubsystemBase {
   }
 
   public void elevatorSube() {
-    m_elevator.set(0.15);  
+    m_elevator.set(-0.92);  
   }
 
   public void elevatorBaja() {
-    m_elevator.set(-0.15);  
+    m_elevator.set(0.92);  
   }
 
   public void elevatorStop() {

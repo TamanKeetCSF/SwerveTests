@@ -28,11 +28,11 @@ public class Hanger extends SubsystemBase {
   }
 
   public void hangerSube() {
-    m_hanger.set(0.15);  
+    m_hanger.set(0.1);  
   }
   
   public void hangerBaja() {
-    m_hanger.set(-0.15);
+    m_hanger.set(-0.1);
   }
   
   public void hangerStop() {

@@ -42,11 +42,11 @@ public class BallIntake extends SubsystemBase {
     }
 
     public void ballIntakeComer() {
-        m_ballIntake.set(0.15);  
+        m_ballIntake.set(0.4);  
     }
 
     public void ballIntakeSacar() {
-        m_ballIntake.set(-0.15);  
+        m_ballIntake.set(-0.4);  
     }
 
     public void ballIntakeStop() {

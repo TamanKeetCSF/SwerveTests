@@ -14,23 +14,27 @@ public class SwerveModuleTesting extends SubsystemBase {
     private final SwerveModule frontLeft = new SwerveModule(
         SwerveConstants.FRONT_LEFT_DRIVE_MOTOR, 
         SwerveConstants.FRONT_LEFT_STEER_MOTOR, 
-        SwerveConstants.FRONT_LEFT_CANCODER);
+        SwerveConstants.FRONT_LEFT_CANCODER,
+        false);
     
     private final SwerveModule frontRight = new SwerveModule(
         SwerveConstants.FRONT_RIGHT_DRIVE_MOTOR, 
         SwerveConstants.FRONT_RIGHT_STEER_MOTOR, 
-        SwerveConstants.FRONT_RIGHT_CANCODER);
+        SwerveConstants.FRONT_RIGHT_CANCODER,
+        true);
     
     private final SwerveModule backLeft = new SwerveModule(
         SwerveConstants.BACK_LEFT_DRIVE_MOTOR, 
         SwerveConstants.BACK_LEFT_STEER_MOTOR, 
-        SwerveConstants.BACK_LEFT_CANCODER);
+        SwerveConstants.BACK_LEFT_CANCODER,
+        false);
     
     private final SwerveModule backRight = new SwerveModule(
         SwerveConstants.BACK_RIGHT_DRIVE_MOTOR, 
         SwerveConstants.BACK_RIGHT_STEER_MOTOR, 
-        SwerveConstants.BACK_RIGHT_CANCODER);
-    
+        SwerveConstants.BACK_RIGHT_CANCODER,
+        true);
+        
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
         SwerveConstants.FRONT_LEFT_POSITION,
         SwerveConstants.FRONT_RIGHT_POSITION,

@@ -1,27 +1,25 @@
 {
   "NetworkTables": {
-    "Persistent Values": {
-      "open": false
-    },
-    "Retained Values": {
-      "open": false
-    },
     "transitory": {
       "FMSInfo": {
         "open": true
       },
       "LiveWindow": {
+        ".status": {
+          "open": true
+        },
         "open": true
       },
       "SmartDashboard": {
-        "DB": {
+        "SwerveSteerPID": {
           "open": true
         },
         "open": true
       }
     },
     "types": {
-      "/FMSInfo": "FMSInfo"
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/SwerveSteerPID": "PIDController"
     }
   },
   "NetworkTables Info": {
@@ -40,10 +38,95 @@
       },
       "open": true
     },
+    "glass@1": {
+      "open": true
+    },
     "visible": true
   },
   "NetworkTables Settings": {
-    "mode": "Client (NT3)",
+    "mode": "Client (NT4)",
     "serverTeam": "3933"
+  },
+  "Plots": {
+    "Plot <0>": {
+      "window": {
+        "visible": false
+      }
+    },
+    "Plot <1>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true,
+              "lockMax": true,
+              "lockMin": true,
+              "max": 500.0,
+              "min": -300.0
+            },
+            {
+              "label": "PID"
+            }
+          ],
+          "backgroundColor": [
+            0.10000000149011612,
+            0.10000000149011612,
+            0.10000000149011612,
+            1.0
+          ],
+          "height": 307,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/SwerveSteerPID/error"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/SwerveSteerPID/measurement"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/SwerveSteerPID/setpoint"
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/CurrentAngle"
+            },
+            {
+              "color": [
+                0.5058823823928833,
+                0.44705885648727417,
+                0.7019608020782471,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/SwerveSteerPID/p",
+              "yAxis": 1
+            }
+          ],
+          "viewTime": 0.9999982118606567,
+          "yaxis2": true
+        }
+      ]
+    }
   }
 }
